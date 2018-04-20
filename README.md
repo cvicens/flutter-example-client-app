@@ -153,7 +153,7 @@ For a more detailed help message, press "h". To quit, press "q".
 ```
 
 This should be the result.
-![Running the demo app](./images/running-demo-app.png)
+![Running the demo app](https://github.com/cvicens/flutter-example-client-app/raw/master/images/running-demo-app.png)
 
 Now if you make any changes to ./lib/main.dart ant hit 'r' you should see changes happening under 1 second in the simulator.
 
@@ -177,7 +177,7 @@ Reloaded 1 of 482 libraries in 585ms.
 
 Let's have a look to the Simulator and see what we got after 585ms.
 
-![Hot reload](./images/hot-reload.png)
+![Hot reload](https://github.com/cvicens/flutter-example-client-app/raw/master/images/hot-reload.png)
 
 Before going on with the implementation of our example app let's have a closer look to the relevant folders and files for this exercise.
 
@@ -216,11 +216,11 @@ In order to update the package dependencies and instanciate them we need to rest
 Log in your RHMAP environment and create a new project by clicking on **Projects→New Project** and selecting 'Hello World Project' template.
 Give your Project and Cloud App a name, unselect the Cordova App. 
 
-![New Project](./images/rhm-new-project.png)
+![New Project](https://github.com/cvicens/flutter-example-client-app/raw/master/images/rhm-new-project.png)
 
 Additionally select iOS and Android client Apps and give them a name.
-![iOS App](./images/rhm-ios-app.png)
-![Android App](./images/rhm-android-app.png)
+![iOS App](https://github.com/cvicens/flutter-example-client-app/raw/master/images/rhm-ios-app.png)
+![Android App](https://github.com/cvicens/flutter-example-client-app/raw/master/images/rhm-android-app.png)
 
 You may wonder why do we need to create an iOS and an Android by selecting the native templates for those platforms. Well it's just a little hack to generate the connection definition in Red Hat Mobile and obtain the corresponding configuration files (fhconfig.plist and fhconfig.properties).
 
@@ -229,40 +229,40 @@ Now it's time to get those files and save them, we'll need them in a minute!
 ## Adding our configuration file to the iOS workspace
 
 Open `./ios/Runner.xcworkspace/` with XCode. Right click the project on the project browser and click on New File.
-![Adding a file](./images/xcode-new-file.png)
+![Adding a file](https://github.com/cvicens/flutter-example-client-app/raw/master/images/xcode-new-file.png)
 Select Property List type of file and give the name 'fhconfig.plist'.
-![Property List file](./images/xcode-plist.png)
+![Property List file](https://github.com/cvicens/flutter-example-client-app/raw/master/images/xcode-plist.png)
 Finally edit the content and paste the configuration you saved before.
-![iOS configuration](./images/xcode-fhconfig-edit.png)
+![iOS configuration](https://github.com/cvicens/flutter-example-client-app/raw/master/images/xcode-fhconfig-edit.png)
 Now the iOS project is set up to invoke services exposed in our Cloud App.
 
 ## Adding our configuration file to the Android project
 
 Prior to create the 'asset' folder we have to import the android project into Android Studio. To do so, select the menu item **File→New→Import Project** and browse to find the './android/' folder inside your application folder and select it.
 
-![Import project](./images/android-studio-asset-folder-1.png)
+![Import project](https://github.com/cvicens/flutter-example-client-app/raw/master/images/android-studio-asset-folder-1.png)
 
 After importing the project you should be able to see the app folder along with another folder devoted to the Red Hat Mobile SDK.
 
-![Android Project](./images/android-studio-import-2.png)
+![Android Project](https://github.com/cvicens/flutter-example-client-app/raw/master/images/android-studio-import-2.png)
 
 Now it's time to create the 'asset' folder where we'll put our configuration file. To create this folder right click on the 'app' item in the project browser and select the menu item **New→Folder→Asset Folder**  as in the next picture.
 
-![New Asset Folder](./images/android-studio-asset-folder-1.png)
+![New Asset Folder](https://github.com/cvicens/flutter-example-client-app/raw/master/images/android-studio-asset-folder-1.png)
 
 On the next screen leave the defaults and click on Finish.
 
-![Accept defaults](./images/android-studio-asset-folder-2.png)
+![Accept defaults](https://github.com/cvicens/flutter-example-client-app/raw/master/images/android-studio-asset-folder-2.png)
 
 Now let's right click on the assets folder and select the menu item **New→File** and name the file as 'fhconfig.properties'.
 
-![New File](./images/android-studio-asset-folder-3.png)
+![New File](https://github.com/cvicens/flutter-example-client-app/raw/master/images/android-studio-asset-folder-3.png)
 
-![Naming the configuration file](./images/android-studio-asset-folder-4.png)
+![Naming the configuration file](https://github.com/cvicens/flutter-example-client-app/raw/master/images/android-studio-asset-folder-4.png)
 
 Finally copy the contents of the file we saved previously. As in the following picture.
 
-![Adding content to fhconfig.properties file](./images/android-studio-asset-folder-5.png)
+![Adding content to fhconfig.properties file](https://github.com/cvicens/flutter-example-client-app/raw/master/images/android-studio-asset-folder-5.png)
 
 ## Time to use [fh_sdk](https://pub.dartlang.org/packages/fh_sdk) plugin
 As we have added **fh_sdk** dependency in **pubspec.yaml** we can import the package as follows.
@@ -320,8 +320,8 @@ After changing main.dart you only have to reload the code by hitting 'r', 'R' or
 
 To test the cloud() API just type a name and hit the button, or just hit the button. The result should look like this.
 
-![Testing cloud() call - Android](./images/cloud-test-1.png)
-![Testing cloud() call - iOS](./images/cloud-test-2.png)
+![Testing cloud() call - Android](https://github.com/cvicens/flutter-example-client-app/raw/master/images/cloud-test-1.png)
+![Testing cloud() call - iOS](https://github.com/cvicens/flutter-example-client-app/raw/master/images/cloud-test-2.png)
 
 # Wrap up
 So far we have installed and test Flutter, added a plugin for Red Hat Mobile (fh_sdk) and test init(), getCloudUrl() and cloud().
