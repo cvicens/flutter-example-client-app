@@ -7,6 +7,7 @@ This article is the first of three parts, I'll cover the following operations:
 
 * $fh.init()
 * $fh.cloud()
+* $fh.getCloudUrl()
 
 The second part will be devoted to $fh.auth() and the final piece to push notifications.
 

@@ -89,6 +89,7 @@ class _MyAppState extends State<MyApp> {
       print('init call ' + result);
       message = result.toString();
       showSnackBarMessage(message);
+      getCloudUrl();
     } on PlatformException catch (e) {
       message = 'Error in FH Init $e';
       showSnackBarMessage(message);
@@ -293,7 +294,6 @@ class _MyAppState extends State<MyApp> {
                       textColor: Colors.white,
                       onPressed: !_sdkInit ? null : () {
                               auth(AUTH_POLICY, _usernameFieldController.text,  _passwordFieldController.text);
-                              getCloudUrl();
                       }
                   )
               ),
