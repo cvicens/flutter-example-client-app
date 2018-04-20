@@ -1,6 +1,12 @@
 #import <UIKit/UIKit.h>
-#import <Flutter/Flutter.h>
 
-@interface AppDelegate : FlutterAppDelegate
+#import <UserNotifications/UserNotifications.h>
+
+#import <Flutter/Flutter.h>
+#import <FH/FH.h>
+
+@interface AppDelegate : FlutterAppDelegate <UNUserNotificationCenterDelegate>
+
+@property (strong, nonatomic) UIWindow *window;
 
 @end
