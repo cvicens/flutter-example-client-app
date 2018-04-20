@@ -235,15 +235,6 @@ class _MyAppState extends State<MyApp> {
                       hintText: "Password",
                     ),
                   ),
-                ),
-                new ListTile(
-                  leading: const Icon(Icons.category),
-                  title: new TextField(
-                    controller: _categoryFieldController,
-                    decoration: new InputDecoration(
-                      hintText: "Category",
-                    ),
-                  ),
                 )
               ],
             ),
@@ -294,18 +285,6 @@ class _MyAppState extends State<MyApp> {
                       onPressed: !_sdkInit ? null : () {
                               auth(AUTH_POLICY, _usernameFieldController.text,  _passwordFieldController.text);
                               getCloudUrl();
-                      }
-                  )
-              ),
-              new Container(
-                  padding: const EdgeInsets.fromLTRB(32.0, 8.0, 32.0, 8.0),
-                  child: new RaisedButton(
-                      child: new Text(_sdkInit ? 'Register for push notifications' : 'Init in progress...'),
-                      color: Theme.of(context).primaryColor,
-                      textColor: Colors.white,
-                      onPressed: !_sdkInit  ? null : () {
-                              // Perform some action
-                              pushRegister(_usernameFieldController.text, [_categoryFieldController.text]);
                       }
                   )
               )
