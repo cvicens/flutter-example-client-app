@@ -60,6 +60,7 @@ class _MyAppState extends State<MyApp> {
       getCloudUrl();
     } on PlatformException catch (e) {
       message = 'Error in FH Init $e';
+      print(message);
       showSnackBarMessage(message);
     }
 

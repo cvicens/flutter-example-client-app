@@ -1,24 +1,3 @@
-# QuickStart Flutter Client-side Template
----------
-Author: Carlos Vicens   
-Level: Intermediate   
-Technologies: Dart, Flutter, RHMAP   
-Summary: A basic Flutter client side template with RHMAP.   
-Target Product: RHMAP   
-Product Versions: Dart 2.0.0-dev.28.0.flutter-0b4f01f759, Flutter 0.1.5   
-Source: https://github.com/cvicens/flutter-example-client-app
-
-
-**Prerequisites:**
-
-- Red Hat Mobile environmet to deploy a sample Cloud App
-- CocoaPods (only for iOS) 1.4.0+
-- iOS 10, 11 [SDK supported configuration](https://access.redhat.com/node/2357761)
-- Android Oreo API 26
-- flutter: 0.1.5
-- fh_sdk : 0.6.2+ [documentation](https://www.npmjs.com/package/rct-fh)
-
-
 # Introduction
 Almost one year ago now, in May 2017, Google presented the first release of [Flutter](https://flutter.io) a [revolutionary](https://hackernoon.com/whats-revolutionary-about-flutter-946915b09514) mobile UI framework to build multi-platform mobile applications. In this article I'm going to explain how to integrate a Flutter App with Red Hat Mobile.
 
@@ -291,15 +270,61 @@ As we have added **fh_sdk** dependency in **pubspec.yaml** we can import the pac
 import 'package:fh_sdk/fh_sdk.dart';
 ```
 
-Then we have access to the FH class and we can use it to invoke operations as in the following example of an 'init()' call.
+Now we have access to the 'FhSdk' class and we can use it to invoke operations as in the following example of an 'init()' call.
 
 ``` dart
 
+String result;
+try {
+  result = await FhSdk.init();
+  print('init call ' + result);
+} on PlatformException catch (e) {
+   message = 'Error in FH Init $e';
+   print('Error ' + message);
+}
+
 ```
 
-## Stop the flutter app in your devices 
+After a successful 'init()' call you can use other operations, for instance 'cloud()' to invoke a REST service running in your Cloud App, as in the next example.
 
-'q' 
+``` dart
 
-## Start again the app...
+dynamic data;
+try {
+  Map options = {
+     "path": "/hello?hello=flutter",
+     "method": "GET",
+     "contentType": "application/json",
+     "timeout":
+     25000 // timeout in milliseconds. Default: 60000 (60s)
+  };
+  data = await FhSdk.cloud(options);
+  print('data ==> ' + data.toString());
+} on PlatformException catch (e, s) {
+  print('Exception details:\n $e');
+}
+
+```
+
+For the sake of simplicity you can clone the branch corresponding to this article (part-1) as follows.
+
+```
+$ git clone -b part-1 https://github.com/cvicens/flutter-example-client-app
+```
+
+And then copy and paste ./lib/main.dart into your project substituting your code.
+
+## Testing the new code
+After changing main.dart you only have to reload the code by hitting 'r', 'R' or restart completely with 'q'  and running `flutter run` again.
+
+To test the cloud() API just type a name and hit the button, or just hit the button. The result should look like this.
+
+![Testing cloud() call - Android](./images/cloud-test-1.png)
+![Testing cloud() call - iOS](./images/cloud-test-2.png)
+
+# Wrap up
+So far we have installed and test Flutter, added a plugin for Red Hat Mobile (fh_sdk) and test init(), getCloudUrl() and cloud().
+In parts 2 and 3 we'll test auth() and set up push notifications. Don't be shy and send a comment if you find any difficulty in following this guide.
+
+
 
