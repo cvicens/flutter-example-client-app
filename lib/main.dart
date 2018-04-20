@@ -46,37 +46,7 @@ class _MyAppState extends State<MyApp> {
   @override
   initState() {
     super.initState();
-    initPlugin(); // Init plugin lowlevel
     initSDK(); // Init Red Hat Mobile SDK
-  }
-
-  // This method takes care of push notifications
-  void notificationHandler (MethodCall call) {
-    assert(call != null);
-    if ('push_message_received' == call.method) {
-        print ('push_message_received ' + call.toString());
-        if (call.arguments != null && call.arguments['userInfo'] != null) {
-          var userInfo = call.arguments['userInfo'];
-          showSnackBarMessage(userInfo['aps']['alert']['body']);
-        } else {
-          showSnackBarMessage(call.toString());
-        }
-      }
-  }
-
-  // Initialize plugin this allows us to receive push notification messages
-  initPlugin() async {
-    String message = 'Init plugin in progress...';
-
-    try {
-      FhSdk.initialize(notificationHandler);
-      print('plugin channel ready');
-      message = 'Plugin channel ready';
-      showSnackBarMessage(message);
-    } on PlatformException catch (e) {
-      message = 'Error in plugin initialize method $e';
-      showSnackBarMessage(message);
-    }
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -89,6 +59,8 @@ class _MyAppState extends State<MyApp> {
       print('init call ' + result);
       message = result.toString();
       showSnackBarMessage(message);
+
+      getCloudUrl();
     } on PlatformException catch (e) {
       message = 'Error in FH Init $e';
       showSnackBarMessage(message);
@@ -147,43 +119,6 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  // Authentication test
-  auth(String authPolicy, String username, String password) async {
-    dynamic data;
-    String message;
-
-    try {
-      data = await FhSdk.auth(authPolicy, username, password);
-      message = 'Authentication success';
-      showSnackBarMessage (message);
-      print('auth data' + data.toString());
-    } catch (e, s) {
-      print('Exception details:\n $e');
-      print('Stack trace:\n $s');
-      message = 'Authentication error';
-      showSnackBarMessage (message);
-    }
-  }
-
-  // Registers for RH Mobile Push Notifications with alias and categories
-  // Both parameters, alias and categories cannot be null (categories can be empty though)
-  pushRegister(String alias, List<String> categories) async {
-    dynamic data;
-    String message;
-
-    try {
-      data = await FhSdk.pushRegisterWithAliasAndCategories(alias, categories);
-      message = data.toString();
-      showSnackBarMessage('Registered as: ' + alias + ' as ' + categories.toString());
-      print('pushRegister data ' + data.toString());
-    } on PlatformException catch (e, s) {
-      print('Exception details:\n $e');
-      print('Stack trace:\n $s');
-      message = 'Error calling pushRegister';
-      showSnackBarMessage(message);
-    }
-  }
-
   void showSnackBarMessage(String message, [int duration = 3]) {
     Scaffold.of(_context).showSnackBar(new SnackBar(
       content: new Text(message),
@@ -194,9 +129,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final TextEditingController _nameFieldController = new TextEditingController();
-    final TextEditingController _usernameFieldController = new TextEditingController();
-    final TextEditingController _passwordFieldController = new TextEditingController();
-    final TextEditingController _categoryFieldController = new TextEditingController();
     TitleSection titleSection = new TitleSection();
     Container formSection = new Container(
       padding: const EdgeInsets.fromLTRB(20.0, 8.0, 20.0, 16.0),
@@ -214,36 +146,6 @@ class _MyAppState extends State<MyApp> {
                       hintText: "Name",
                     ),
                   ),
-                ),
-                new ListTile(
-                  leading: const Icon(Icons.person),
-                  title: new TextField(
-                    controller: _usernameFieldController,
-                    autocorrect: false,
-                    decoration: new InputDecoration(
-                      hintText: "Username",
-                    ),
-                  ),
-                ),
-                new ListTile(
-                  leading: const Icon(Icons.vpn_key),
-                  title: new TextField(
-                    controller: _passwordFieldController,
-                    obscureText: true,
-                    autocorrect: false,
-                    decoration: new InputDecoration(
-                      hintText: "Password",
-                    ),
-                  ),
-                ),
-                new ListTile(
-                  leading: const Icon(Icons.category),
-                  title: new TextField(
-                    controller: _categoryFieldController,
-                    decoration: new InputDecoration(
-                      hintText: "Category",
-                    ),
-                  ),
                 )
               ],
             ),
@@ -257,11 +159,6 @@ class _MyAppState extends State<MyApp> {
           appBar: new AppBar(
             title: new Text('Red Hat MAP - Hello Test'),
           ),
-          //floatingActionButton: new FloatingActionButton(
-          //  tooltip: 'Add', // used by assistive technologies
-          //  child: new Icon(Icons.add),
-          //  onPressed: null,
-          //),
           body: new Builder(
             // Create an inner BuildContext so that the onPressed methods
             // can refer to the Scaffold with Scaffold.of().
@@ -282,30 +179,6 @@ class _MyAppState extends State<MyApp> {
                       onPressed: !_sdkInit ? null : () {
                               // Perform some action
                               sayHello(_nameFieldController.text);
-                      }
-                  )
-              ),
-              new Container(
-                  padding: const EdgeInsets.fromLTRB(32.0, 8.0, 32.0, 8.0),
-                  child: new RaisedButton(
-                      child: new Text(_sdkInit ? 'Test auth' : 'Init in progress...'),
-                      color: Theme.of(context).primaryColor,
-                      textColor: Colors.white,
-                      onPressed: !_sdkInit ? null : () {
-                              auth(AUTH_POLICY, _usernameFieldController.text,  _passwordFieldController.text);
-                              getCloudUrl();
-                      }
-                  )
-              ),
-              new Container(
-                  padding: const EdgeInsets.fromLTRB(32.0, 8.0, 32.0, 8.0),
-                  child: new RaisedButton(
-                      child: new Text(_sdkInit ? 'Register for push notifications' : 'Init in progress...'),
-                      color: Theme.of(context).primaryColor,
-                      textColor: Colors.white,
-                      onPressed: !_sdkInit  ? null : () {
-                              // Perform some action
-                              pushRegister(_usernameFieldController.text, [_categoryFieldController.text]);
                       }
                   )
               )
