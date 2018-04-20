@@ -36,9 +36,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // Change this to match your Authentication Policy on Red Hat Mobile if you plan to test authentication
-  static const String AUTH_POLICY = 'flutter';
-
   BuildContext _context;
 
   bool _sdkInit = false;
